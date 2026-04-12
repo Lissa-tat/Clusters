@@ -1,0 +1,77 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.widgets import Slider, Button
+
+def f(t, amplitude, frequency):
+    return amplitude * np.sin(2 * np.pi * frequency * t)
+
+# t = np.linspace(0, 1, 1000)
+# init_amplitude = 5
+# init_frequency = 3
+
+# fig, ax = plt.subplots()
+# line, = ax.plot(t, f(t, init_amplitude, init_frequency), lw=2)
+# ax.set_xlabel('Time [s]')
+
+x = np.linspace(0, 10, 10)
+# x1 = np.linspace(0, 10, 10)
+init_a = 2
+init_b = 5
+def my_func(x, a, b):
+    # amplitude * np.sin(2 * np.pi * frequency * t)
+    y = np.linspace(0, 10, 10)
+    # t = 6
+    # print(y)
+    y = a*(x**2) + b
+    
+    return y
+
+def my_func1(x, a, b):
+    # amplitude * np.sin(2 * np.pi * frequency * t)
+    y = np.linspace(0, 10, 10)
+    # t = 6
+    # print(y)
+    y = a*x + b
+    
+    return y
+# print(my_func(x))
+
+fig, ax = plt.subplots()
+line, = ax.plot(x, my_func(x, init_a, init_b), lw=2)
+line1, = ax.plot(x, my_func1(x, init_a, init_b), lw=2)
+ax.set_xlabel('Time [s]')
+
+# Регулировка области графика для размещения ползунков
+fig.subplots_adjust(left=0.25, bottom=0.25)
+
+# Горизонтальный ползунок для частоты
+axfreq = fig.add_axes([0.25, 0.1, 0.65, 0.03])
+freq_slider = Slider(ax=axfreq, label='Frequency [Hz]', valmin=0.1, valmax=30, valinit=init_b)
+
+# Вертикальный ползунок для амплитуды
+axamp = fig.add_axes([0.1, 0.25, 0.0225, 0.63])
+amp_slider = Slider(ax=axamp, label="Amplitude", valmin=0, valmax=10, valinit=init_a, orientation="vertical")
+
+# Функция для обновления графика при изменении значения ползунка
+def update(val):
+    line.set_ydata(my_func(x, amp_slider.val, freq_slider.val))
+    line1.set_ydata(my_func1(x, amp_slider.val, freq_slider.val))
+    fig.canvas.draw_idle()
+    # fig.canvas.show()
+
+freq_slider.on_changed(update)
+amp_slider.on_changed(update)
+
+# Кнопка для сброса ползунков к начальным значениям
+resetax = fig.add_axes([0.8, 0.025, 0.1, 0.04])
+button = Button(resetax, 'Reset', hovercolor='0.975')
+
+def reset(event):
+    freq_slider.reset()
+    amp_slider.reset()
+
+button.on_clicked(reset)
+
+plt.show()
+
+
