@@ -45,7 +45,7 @@ def K_means(coordinates, k, centers, total_sum):
     tol = 1e-16
     old_centers = centers.copy()
     distances = calculate_distance(coordinates, centers)
-    labels = np.argmin(distances, axis=1) # пошли по строчкам, в каждой строчке выбрали минимум
+    labels = np.argmin(distances, axis=1) # пошли по строчкам, в каждой строчке выбрали минимум. (Какой то текст)
    
     for j in range(k):
         if np.sum(labels == j) > 0: # проверяем, что кластер не пустой
