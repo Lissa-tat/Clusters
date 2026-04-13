@@ -14,20 +14,6 @@ from PIL import Image
 import json
 
 
-# coordinates = np.load('data\Coords.npy')
-
-# print(len(coordinates[:, 0]))
-
-
-# 1. Сделать картинку-подложку на правом рисунке ax[1] (1 и 2 можно объединить)
-# 2. Сделать функцию load_image в классе App
-# 3. Сделать функцию load_points в классе App 
-
-# Дополнительно.
-# 1. Сделать аннотацию типов что бы беленького не было 
-
-
-
 class App:
     def __init__(self):
         # self.coordinates = coordinates
@@ -57,8 +43,7 @@ class App:
         # Загрузка изображения
         img = Image.open(src)
         self.img = np.asarray(img)
-        # self.ax.imshow(img_array)
-        # self.img = image.imread(src)
+      
 
     def load_points(self, src : str):
         with open(src, 'r') as f:
@@ -66,19 +51,13 @@ class App:
         
     def draw(self, total, k, centers, labels):
 
-        # self.img = image.imread('data\im1.jpg')
-
-        # Создание фигуры и осей
-        # self.fig, self.ax[1] = plt.subplots(figsize=(10, 6))
-        # self.fig, self.ax[1] = plt.subplots()
-        
         self.line.set_data(range(k), total)
         self.ax[0].set_xlim(0, k-1)
         self.ax[0].set_ylim(0, max(total))
         self.ax[0].set_title("поиск оптимального количесва кластеров")
         
         self.ax[1].clear()
-        # self.ax[1].imshow(self.img, zorder=0, extent=[0.5, 8.0, 1.0, 7.0])
+      
         self.ax[1].imshow(self.img)
 
         self.ax[1].scatter(self.points[:, 0], self.points[:, 1], c=labels, cmap='viridis', alpha=0.7, s=40)
@@ -87,17 +66,6 @@ class App:
             self.ax[1].text(centers[j, 0], centers[j, 1], f"{len(self.points[labels == j])}", c = 'red', fontsize=12)
        
         self.ax[1].set_title(f"количество кластеров k = {k}")
-
-        
-    # for j in range(k):
-    #     plt.text(centers[j, 0], centers[j, 1], f"{len(coordinates[labels == j])}", c = 'red', fontsize=16)
-
-        # self.image()
-
-        # self.ax[1].imshow(self.img, alpha=0.5, zorder=0, extent=[0.5, 8.0, 1.0, 7.0])
-        # plt.show()
-
-        
 
 
     def update(self, val):
